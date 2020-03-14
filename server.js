@@ -15,7 +15,7 @@ function main() {
   app.use(express.urlencoded({ extended: false }))
   app.use(express.json())
   app.use('/api', require('./src/routers'))
-  app.listen(8066)
+  app.listen(8000)
 }
 
 main()
