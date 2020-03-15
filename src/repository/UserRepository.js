@@ -30,11 +30,11 @@ class UserRepository {
   async Insert(dados){
     return new Promise(async(resolve, reject) => {
       try{
-        await poolPromise.query('INSERT INTO USERS (id, name, cpf, email) VALUES ((SELECT MAX(id)+1 FROM USERS),$1, $2, $3)', [dados.name, dados.cpf, dados.email],(err, res) =>{
+        await poolPromise.query('INSERT INTO USERS (id, name, cpf, email, status) VALUES ((SELECT MAX(id)+1 FROM USERS),$1, $2, $3, $4)', [dados.name, dados.cpf, dados.email, 1],(err, res) =>{
           if (err == null) {
-            resolve({ Mensagem: "Empresa inserida com sucesso", Code: 200 })
+            resolve({ Mensagem: "Usuário inserido com sucesso", Code: 200 })
           } else {
-            reject({ Mensagem: "Não foi possivel inserir os dados da empresa", Code: 403 })
+            reject({ Mensagem: "Não foi possivel inserir os dados do usuário", Code: 403 })
           }
         })
       } catch (err) {
@@ -47,9 +47,9 @@ class UserRepository {
       try{
         await poolPromise.query('UPDATE USERS SET NAME = $2, CPF = $3, EMAIL = $4 WHERE ID = $1', [user.id, user.name, user.cpf, user.email],(err, res) =>{
           if (err == null) {
-            resolve({ Mensagem: "Empresa alterada com sucesso", Code: 200 })
+            resolve({ Mensagem: "Usuário alterado com sucesso", Code: 200 })
           } else {
-            reject({ Mensagem: "Não foi possivel alterar os dados da empresa", Code: 403 })
+            reject({ Mensagem: "Não foi possivel alterar os dados do usuário", Code: 403 })
           }
         })
       } catch (err) {
@@ -62,9 +62,9 @@ class UserRepository {
       try{
         await poolPromise.query('UPDATE USERS SET STATUS = $2 WHERE ID = $1', [id, 0] ,(err, res) =>{
           if (err == null) {
-            resolve({ Mensagem: "Empresa excluida com sucesso", Code: 200 })
+            resolve({ Mensagem: "Usuário excluido com sucesso", Code: 200 })
           } else {
-            reject({ Mensagem: "Não foi possivel excluir os dados da empresa", Code: 403 })
+            reject({ Mensagem: "Não foi possivel excluir o usuário", Code: 403 })
           }
         })
       } catch (err) {
