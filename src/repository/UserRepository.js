@@ -30,7 +30,7 @@ class UserRepository {
   async Insert(dados){
     return new Promise(async(resolve, reject) => {
       try{
-        await poolPromise.query('INSERT INTO USERS (id, name, cpf, email, status) VALUES ((SELECT MAX(id)+1 FROM USERS),$1, $2, $3, $4)', [dados.name, dados.cpf, dados.email, 1],(err, res) =>{
+        await poolPromise.query('INSERT INTO USERS (name, cpf, email, status) VALUES ($1, $2, $3, $4)', [dados.name, dados.cpf, dados.email, 1],(err, res) =>{
           if (err == null) {
             resolve({ Mensagem: "Usuário inserido com sucesso", Code: 200 })
           } else {
