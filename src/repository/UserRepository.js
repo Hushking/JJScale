@@ -90,13 +90,16 @@ class UserRepository {
   async VerifyUser(cpf){
     return new Promise(async(resolve, reject) => {
       try{
-        await poolPromise.query('SELECT CPF FROM USERS WHERE CPF = $1', [cpf], (err, res) => {
+        let user;
+        await poolPromise.query('SELECT * FROM USERS WHERE CPF = $1', [cpf], (err, res) => {
           if (err) {
             reject(err.stack)
           } else {
-            console.log(res.rowCount)
             if (res.rowCount == 1){
-              resolve({ Mensagem: "Usuário existente", Code: 200 })
+              res.rows.map(item => {
+                 user = new UserModel({...item})
+              })
+              resolve(user)
             } else {
               reject({ Mensagem: "Usuário inexistente", Code: 403 })
             }
