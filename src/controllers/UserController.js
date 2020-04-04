@@ -59,6 +59,14 @@ class UserController {
       return res.status(500).json(`Erro interno:${err}`)
     })
   }
+  async VerifyUser(req, res){
+    let cpf = req.params.cpf
+    await UserRepository.VerifyUser(cpf).then(item => {
+      res.status(200).json(item)
+    }).catch(error => {
+        res.status(500).json(error)
+    })
+  }
 }
 
 module.exports = new UserController()

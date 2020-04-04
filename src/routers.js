@@ -12,6 +12,7 @@ rotas.post('/token', SecurityController.Login)
 
 rotas.get('/user', UserController.GetUsers)
 rotas.get('/user/:id', UserController.GetUserById)
+rotas.get('/user/check/:cpf', UserController.VerifyUser)
 rotas.post('/user', UserController.Insert)
 rotas.put('/user', UserController.Edit)
 rotas.put('/user/:id', UserController.Delete)

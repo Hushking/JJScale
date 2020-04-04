@@ -87,6 +87,26 @@ class UserRepository {
       }
     })
   }
+  async VerifyUser(cpf){
+    return new Promise(async(resolve, reject) => {
+      try{
+        await poolPromise.query('SELECT CPF FROM USERS WHERE CPF = $1', [cpf], (err, res) => {
+          if (err) {
+            reject(err.stack)
+          } else {
+            console.log(res.rowCount)
+            if (res.rowCount == 1){
+              resolve({ Mensagem: "Usuário existente", Code: 200 })
+            } else {
+              reject({ Mensagem: "Usuário inexistente", Code: 403 })
+            }
+          }
+        })
+      }catch (err){
+        reject(err.stack)
+      }
+    })
+  }
 
 }
 
