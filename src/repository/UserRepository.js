@@ -11,12 +11,7 @@ class UserRepository {
             reject(err.stack)
           } else {
             res.rows.map(item => {
-              let user = new UserModel(
-                item.id
-                , item.name
-                , item.cpf
-                , item.email
-              )
+              let user = new UserModel({...item})
               lista.push(user)
             })
             resolve(lista)
@@ -81,12 +76,7 @@ class UserRepository {
             reject(err.stack)
           } else {
             res.rows.map(item => {
-              let user = new UserModel(
-                item.id
-                , item.name
-                , item.cpf
-                , item.email
-              )
+              let user = new UserModel({...item})
               list.push(user)
             })
             resolve(list)

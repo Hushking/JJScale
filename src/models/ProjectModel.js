@@ -1,14 +1,16 @@
 class ProjectModel{
-    constructor(
-        idProjeto
+    constructor({
+        idprojeto
         , nome
         , apelido
-        , idCliente
-    ){
-        this.idProjeto = idProjeto
+        , idcliente
+        , status
+    }){
+        this.idprojeto = idprojeto
         this.nome = nome
         this.apelido = apelido
-        this.idCliente = idCliente
+        this.idcliente = idcliente
+        this.status = status
     }
 }
 module.exports = ProjectModel

@@ -1,11 +1,11 @@
 class UserModel{
-  constructor(
+  constructor({
       id
       , name
       , cpf
       , email
       , status
-    ){
+  }){
       this.id = id
       this.name = name
       this.cpf = cpf
