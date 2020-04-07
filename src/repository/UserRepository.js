@@ -75,11 +75,15 @@ class UserRepository {
           if (err) {
             reject(err.stack)
           } else {
-            res.rows.map(item => {
-              let user = new UserModel({...item})
-              list.push(user)
-            })
-            resolve(list)
+            if (res.rowCount == 1){
+              res.rows.map(item => {
+                let user = new UserModel({...item})
+                list.push(user)
+              })
+              resolve(list)
+            } else {
+              reject({ Mensagem: "Usuário inexistente", Code: 403 })
+            }
           }
         })
       } catch (err) {

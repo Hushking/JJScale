@@ -56,7 +56,7 @@ class UserController {
         return res.status(200).json(user)
       }
     }).catch (err => {
-      return res.status(500).json(`Erro interno:${err}`)
+      return res.status(500).json(`Erro interno:${err.Mensagem}`)
     })
   }
   async VerifyUser(req, res){

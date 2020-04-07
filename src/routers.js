@@ -3,7 +3,8 @@ const middleware = require('./middleware/jwtconfig')
 const {
   UserController,
   ProjectController,
-  SecurityController
+  SecurityController,
+  ClientController
 } = require('./controllers')
 
 rotas.post('/token', SecurityController.Login)
@@ -22,6 +23,12 @@ rotas.get('/projeto/:id', ProjectController.GetProjectById)
 rotas.post('/projeto', ProjectController.Insert)
 rotas.put('/projeto', ProjectController.Edit)
 rotas.put('/projeto/:id', ProjectController.Delete)
+
+rotas.get('/cliente', ClientController.GetClients)
+rotas.get('/cliente/:id', ClientController.GetClientById)
+rotas.post('/cliente', ClientController.Insert)
+rotas.put('/cliente', ClientController.Edit)
+rotas.put('/cliente/:id', ClientController.Delete)
 
 
 module.exports = rotas

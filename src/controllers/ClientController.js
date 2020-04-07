@@ -1,9 +1,9 @@
-const ProjectRepository = require('../repository/ProjectRepository')
-const ProjectModel = require('../models/ProjectModel')
+const ClientRepository = require('../repository/ClientRepository')
+const ClientModel = require('../models/ClientModel')
 
-class ProjectController{
-    async GetProjects(req, res){
-        await ProjectRepository.GetProjects().then(list => {
+class ClientController{
+    async GetClients(req, res){
+        await ClientRepository.GetClients().then(list => {
           if (!list) {
             return res.status(404).json(list)
           } else {
@@ -14,14 +14,14 @@ class ProjectController{
         })
       }
       async Insert(req, res){
-        await ProjectRepository.Insert(req.body).then(item => {
+        await ClientRepository.Insert(req.body).then(item => {
           res.status(200).json(item)
         }).catch(error => {
             res.status(500).json(error)
         })
       }
       async Edit(req, res){
-        await ProjectRepository.Edit(req.body).then(item => {
+        await ClientRepository.Edit(req.body).then(item => {
           res.status(200).json(item)
         }).catch(error => {
             res.status(500).json(error)
@@ -29,23 +29,23 @@ class ProjectController{
       }
       async Delete(req, res){
         let id = req.params.id
-        await ProjectRepository.Delete(id).then(item => {
+        await ClientRepository.Delete(id).then(item => {
           res.status(200).json(item)
         }).catch(error => {
             res.status(500).json(error)
         })
       }
-      async GetProjectById(req, res){
+      async GetClientById(req, res){
         let id = req.params.id
-        await ProjectRepository.GetProjectById(id).then(user => {
-          if (!user) {
-            return res.status(404).json(user)
+        await ClientRepository.GetClientById(id).then(client => {
+          if (!client) {
+            return res.status(404).json(client)
           } else {
-            return res.status(200).json(user)
+            return res.status(200).json(client)
           }
         }).catch (err => {
           return res.status(500).json(`Erro interno:${err.Mensagem}`)
         })
       }
 }
-module.exports = new ProjectController()
+module.exports = new ClientController()

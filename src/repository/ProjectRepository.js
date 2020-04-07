@@ -6,12 +6,13 @@ class ProjectRepository{
         return new Promise(async(resolve, reject) => {
           try {
             let lista = []
-            await poolPromise.query('SELECT * FROM PROJETO WHERE STATUS = $1',[1] ,(err, res) => {
+            await poolPromise.query('SELECT P.*, C.RAZAOSOCIAL FROM PROJETO P JOIN CLIENTE C ON C.IDCLIENTE = P.IDCLIENTE WHERE P.STATUS = $1',[1] ,(err, res) => {
               if (err) {
                 reject(err.stack)
               } else {
                 res.rows.map(item => {
                   let project = new ProjectModel({...item})
+                  project.razaosocial = item.razaosocial
                   lista.push(project)
                 })
                 resolve(lista)
@@ -25,7 +26,7 @@ class ProjectRepository{
       async Insert(dados){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('INSERT INTO PROJETO (idprojeto, nome, apelido, idcliente, status) VALUES ((SELECT MAX(idprojeto)+1 FROM PROJETO), $1, $2, $3, $4)', [dados.nome, dados.apelido, dados.idcliente, 1],(err, res) =>{
+            await poolPromise.query('INSERT INTO PROJETO (nome, apelido, idcliente, status) VALUES ($1, $2, $3, $4)', [dados.nome, dados.apelido, dados.idcliente, 1],(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Projeto inserido com sucesso", Code: 200 })
               } else {
@@ -72,15 +73,20 @@ class ProjectRepository{
         return new Promise(async(resolve, reject) => {
           try {
             let list = []
-            await poolPromise.query('SELECT * FROM PROJETO WHERE IDPROJETO = $1 AND STATUS = $2', [id, 1], (err, res) => {
+            await poolPromise.query('SELECT P.*, C.RAZAOSOCIAL FROM PROJETO P JOIN CLIENTE C ON C.IDCLIENTE = P.IDCLIENTE WHERE P.IDPROJETO = $1 AND P.STATUS = $2', [id, 1], (err, res) => {
               if (err) {
                 reject(err.stack)
               } else {
-                res.rows.map(item => {
-                  let project = new ProjectModel({...item})
-                  list.push(project)
-                })
-                resolve(list)
+                if (res.rowCount == 1){
+                  res.rows.map(item => {
+                    let project = new ProjectModel({...item})
+                    project.razaosocial = item.razaosocial
+                    list.push(project)
+                  })
+                  resolve(list)
+                } else {
+                reject({ Mensagem: "Projeto inexistente", Code: 403 })
+                }
               }
             })
           } catch (err) {

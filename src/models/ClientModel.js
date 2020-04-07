@@ -1,5 +1,5 @@
 class ClientModel{
-    constructor(
+    constructor({
         idCliente
         , cpf_cnpj
         , razaoSocial
@@ -11,7 +11,8 @@ class ClientModel{
         , uf
         , cidade
         , pais
-    ){
+        , status
+    }){
         this.idCliente = idCliente
         this.cpf_cnpj = cpf_cnpj
         this.razaoSocial = razaoSocial
@@ -23,6 +24,7 @@ class ClientModel{
         this.uf = uf
         this.cidade = cidade
         this.pais = pais
+        this.status = status
     }
 }
 module.exports = ClientModel
