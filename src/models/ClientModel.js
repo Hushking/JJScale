@@ -2,7 +2,7 @@ class ClientModel{
     constructor({
         idCliente
         , cpf_cnpj
-        , razaoSocial
+        , razaosocial
         , rua
         , numero
         , complemento
@@ -15,7 +15,7 @@ class ClientModel{
     }){
         this.idCliente = idCliente
         this.cpf_cnpj = cpf_cnpj
-        this.razaoSocial = razaoSocial
+        this.razaosocial = razaosocial
         this.rua = rua
         this.numero = numero
         this.complemento = complemento 
