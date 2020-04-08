@@ -1,6 +1,6 @@
 class ClientModel{
     constructor({
-        idCliente
+        idcliente
         , cpf_cnpj
         , razaosocial
         , rua
@@ -13,7 +13,7 @@ class ClientModel{
         , pais
         , status
     }){
-        this.idCliente = idCliente
+        this.idcliente = idcliente
         this.cpf_cnpj = cpf_cnpj
         this.razaosocial = razaosocial
         this.rua = rua
