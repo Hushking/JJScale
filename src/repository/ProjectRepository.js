@@ -42,7 +42,7 @@ class ProjectRepository{
       async Edit(project){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('UPDATE PROJETO SET NOME = $2, APELIDO = $3 WHERE IDPROJETO = $1', [project.id, project.nome, project.apelido],(err, res) =>{
+            await poolPromise.query('UPDATE PROJETO SET NOME = $2, APELIDO = $3, IDCLIENTE = $4 WHERE IDPROJETO = $1', [project.idprojeto, project.nome, project.apelido, project.idcliente],(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Projeto alterado com sucesso", Code: 200 })
               } else {
