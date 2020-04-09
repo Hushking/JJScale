@@ -25,7 +25,7 @@ class ClientRepository{
       async Insert(dados){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('INSERT INTO CLIENTE (cpf_cnpj, razaosocial, rua, numero, complemento, cep, bairro, uf, cidade, pais, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)'
+            await poolPromise.query('INSERT INTO CLIENTE (idcliente, cpf_cnpj, razaosocial, rua, numero, complemento, cep, bairro, uf, cidade, pais, status) VALUES ((SELECT MAX(idcliente)+1 FROM CLIENTE), $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)'
             , [dados.cpf_cnpj, dados.razaosocial, dados.rua, dados.numero, dados.complemento, dados.cep, dados.bairro, dados.uf, dados.cidade, dados.pais, 1],(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Cliente inserido com sucesso", Code: 200 })
