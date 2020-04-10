@@ -38,11 +38,11 @@ class ClientRepository{
           }
         })
       }
-      async Edit(project){
+      async Edit(client){
         return new Promise(async(resolve, reject) => {
           try{
             await poolPromise.query('UPDATE CLIENTE SET CPF_CNPJ = $2, RAZAOSOCIAL = $3, RUA = $4, NUMERO = $5, COMPLEMENTO = $6, CEP = $7, BAIRRO = $8, UF = $9, CIDADE = $10, PAIS = $11 WHERE IDCLINTE = $1'
-            , [dados.idcliente , dados.cpf_cnpj, dados.razaosocial, dados.rua, dados.numero, dados.complemento, dados.cep, dados.bairro, dados.uf, dados.cidade, dados.pais],(err, res) =>{
+            , [client.idcliente , client.cpf_cnpj, client.razaosocial, client.rua, client.numero, client.complemento, client.cep, client.bairro, client.uf, client.cidade, client.pais],(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Cliente alterado com sucesso", Code: 200 })
               } else {
