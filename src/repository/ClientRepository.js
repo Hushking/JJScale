@@ -41,7 +41,7 @@ class ClientRepository{
       async Edit(client){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('UPDATE CLIENTE SET CPF_CNPJ = $2, RAZAOSOCIAL = $3, RUA = $4, NUMERO = $5, COMPLEMENTO = $6, CEP = $7, BAIRRO = $8, UF = $9, CIDADE = $10, PAIS = $11 WHERE IDCLINTE = $1'
+            await poolPromise.query('UPDATE CLIENTE SET CPF_CNPJ = $2, RAZAOSOCIAL = $3, RUA = $4, NUMERO = $5, COMPLEMENTO = $6, CEP = $7, BAIRRO = $8, UF = $9, CIDADE = $10, PAIS = $11 WHERE IDCLIENTE = $1'
             , [client.idcliente , client.cpf_cnpj, client.razaosocial, client.rua, client.numero, client.complemento, client.cep, client.bairro, client.uf, client.cidade, client.pais],(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Cliente alterado com sucesso", Code: 200 })
@@ -51,6 +51,7 @@ class ClientRepository{
               }
             })
           } catch (err) {
+            console.log(err)
             reject(err.stack)
           }
         })
