@@ -1,10 +1,10 @@
 class ProductModel{
     constructor(
-        idProduto
+        idproduto
         , descricao
         , requisito
     ){
-        this.idProduto = idProduto
+        this.idproduto = idproduto
         this.descricao = descricao
         this.requisito = requisito
     }
