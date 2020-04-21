@@ -4,6 +4,7 @@ const {
   UserController,
   ProjectController,
   SecurityController,
+  ProductController,
   ClientController
 } = require('./controllers')
 
@@ -30,5 +31,10 @@ rotas.post('/cliente', ClientController.Insert)
 rotas.put('/cliente', ClientController.Edit)
 rotas.put('/cliente/:id', ClientController.Delete)
 
+rotas.get('/produto', ProductController.GetProduct)
+rotas.get('/produto/:id', ProductController.GetProductById)
+rotas.post('/produto', ProductController.Insert)
+rotas.put('/produto', ProductController.Edit)
+rotas.put('/produto/:id', ProductController.Delete)
 
 module.exports = rotas
