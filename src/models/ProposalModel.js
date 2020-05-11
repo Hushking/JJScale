@@ -1,12 +1,12 @@
 class ProposalModel{
     constructor(
-        idProposta
-        , idProjeto
-        , idAprovador
+        idproposta
+        , idprojeto
+        , idaprovador
     ){
-        this.idProposta = idProposta
-        this.idProjeto = idProjeto
-        this.idAprovador = idAprovador
+        this.idproposta = idproposta
+        this.idprojeto = idprojeto
+        this.idaprovador = idaprovador
     }
 }
 module.exports = ProposalModel
