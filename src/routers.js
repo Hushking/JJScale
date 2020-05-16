@@ -5,7 +5,8 @@ const {
   ProjectController,
   SecurityController,
   ProductController,
-  ClientController
+  ClientController,
+  TemplateController
 } = require('./controllers')
 
 rotas.post('/token', SecurityController.Login)
@@ -30,6 +31,12 @@ rotas.get('/cliente/:id', ClientController.GetClientById)
 rotas.post('/cliente', ClientController.Insert)
 rotas.put('/cliente', ClientController.Edit)
 rotas.put('/cliente/:id', ClientController.Delete)
+
+rotas.get('/modelo', TemplateController.GetTemplate)
+rotas.get('/modelo/:id', TemplateController.GetTemplateById)
+rotas.post('/modelo', TemplateController.Insert)
+rotas.put('/modelo', TemplateController.Edit)
+rotas.put('/modelo/:id', TemplateController.Delete)
 
 rotas.get('/produto', ProductController.GetProduct)
 rotas.get('/produto/:id', ProductController.GetProductById)

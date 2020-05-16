@@ -1,14 +1,14 @@
 class TemplateModel{
-    constructor(
-        idModelo
+    constructor({
+        idmodelo
         , topico
         , descricao
         , json
-    ){
-        this;idModelo = idModelo
-        this;topico = topico
-        this;descricao = descricao
-        this;json = json
+    }){
+        this.idmodelo = idmodelo
+        this.topico = topico
+        this.descricao = descricao
+        this.json = json
     }
 }
 module.exports = TemplateModel
