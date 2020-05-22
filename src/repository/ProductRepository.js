@@ -25,7 +25,7 @@ class ProductRepository{
       async Insert(dados){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('INSERT INTO PRODUTO (idproduto, descricao, requisito, status) VALUES ((SELECT MAX(idproduto)+1 FROM PRODUTO), $1, $2, $3)', [dados.descricao, dados.requisito, 1],(err, res) =>{
+            await poolPromise.query('INSERT INTO PRODUTO (idproduto, descricao, titulo, requisito, status) VALUES ((SELECT MAX(idproduto)+1 FROM PRODUTO), $1, $2, $3, $4)', [dados.descricao, dados.titulo, dados.requisito, 1],(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Produto inserido com sucesso", Code: 200 })
               } else {
