@@ -25,7 +25,7 @@ class TemplateRepository{
       async Insert(dados){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('INSERT INTO MODELO (topico, descricao, json, status) VALUES ($1, $2, $3, $4)', [dados.topico, dados.descricao, dados.json, 1],(err, res) =>{
+            await poolPromise.query('INSERT INTO MODELO (topico, descricao, json, status, log_data, log_usuario) VALUES ($1, $2, $3, $4, NOW(), $5)', [dados.topico, dados.descricao, dados.json, 1, dados.idusuario],(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Modelo inserido com sucesso", Code: 200 })
               } else {
@@ -40,7 +40,7 @@ class TemplateRepository{
       async Edit(dados){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('UPDATE MODELO SET TOPICO = $2, DESCRICAO = $3, JSON = $4 WHERE IDMODELO = $1', [dados.idmodelo, dados.topico, dados.descricao, dados.json],(err, res) =>{
+            await poolPromise.query('UPDATE MODELO SET TOPICO = $2, DESCRICAO = $3, JSON = $4, LOG_DATA = NOW(), LOG_USUARIO = $5 WHERE IDMODELO = $1', [dados.idmodelo, dados.topico, dados.descricao, dados.json, dados.idusuario],(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Modelo alterado com sucesso", Code: 200 })
               } else {
@@ -52,10 +52,10 @@ class TemplateRepository{
           }
         })
       }
-      async Delete(id){
+      async Delete(dados){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('UPDATE MODELO SET STATUS = $2 WHERE IDMODELO = $1', [id, 0] ,(err, res) =>{
+            await poolPromise.query('UPDATE MODELO SET STATUS = $2, LOG_DATA = NOW(), LOG_USUARIO = $3 WHERE IDMODELO = $1', [dados.id, 0, dados.idusuario] ,(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Modelo excluido com sucesso", Code: 200 })
               } else {

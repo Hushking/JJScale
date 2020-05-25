@@ -25,7 +25,7 @@ class UserRepository {
   async Insert(dados){
     return new Promise(async(resolve, reject) => {
       try{
-        await poolPromise.query('INSERT INTO USERS (name, cpf, email, status) VALUES ($1, $2, $3, $4)', [dados.name, dados.cpf, dados.email, 1],(err, res) =>{
+        await poolPromise.query('INSERT INTO USERS (name, cpf, email, status, log_data, log_usuario) VALUES ($1, $2, $3, $4, NOW(), $5)', [dados.name, dados.cpf, dados.email, 1, dados.idusuario],(err, res) =>{
           if (err == null) {
             resolve({ Mensagem: "Usuário inserido com sucesso", Code: 200 })
           } else {
@@ -40,7 +40,7 @@ class UserRepository {
   async Edit(user){
     return new Promise(async(resolve, reject) => {
       try{
-        await poolPromise.query('UPDATE USERS SET NAME = $2, CPF = $3, EMAIL = $4 WHERE ID = $1', [user.id, user.name, user.cpf, user.email],(err, res) =>{
+        await poolPromise.query('UPDATE USERS SET NAME = $2, CPF = $3, EMAIL = $4, LOG_DATA = NOW(), LOG_USUARIO = $5  WHERE ID = $1', [user.id, user.name, user.cpf, user.email, user.idusuario],(err, res) =>{
           if (err == null) {
             resolve({ Mensagem: "Usuário alterado com sucesso", Code: 200 })
           } else {
@@ -52,10 +52,10 @@ class UserRepository {
       }
     })
   }
-  async Delete(id){
+  async Delete(dados){
     return new Promise(async(resolve, reject) => {
       try{
-        await poolPromise.query('UPDATE USERS SET STATUS = $2 WHERE ID = $1', [id, 0] ,(err, res) =>{
+        await poolPromise.query('UPDATE USERS SET STATUS = $2, LOG_DATA = NOW(), LOG_USUARIO = $3  WHERE ID = $1', [dados.id, 0, dados.idusuario] ,(err, res) =>{
           if (err == null) {
             resolve({ Mensagem: "Usuário excluido com sucesso", Code: 200 })
           } else {

@@ -25,7 +25,7 @@ class ProductRepository{
       async Insert(dados){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('INSERT INTO PRODUTO (idproduto, descricao, titulo, requisito, status) VALUES ((SELECT MAX(idproduto)+1 FROM PRODUTO), $1, $2, $3, $4)', [dados.descricao, dados.titulo, dados.requisito, 1],(err, res) =>{
+            await poolPromise.query('INSERT INTO PRODUTO (idproduto, descricao, titulo, requisito, status, log_data, log_usuario) VALUES ((SELECT MAX(idproduto)+1 FROM PRODUTO), $1, $2, $3, $4, NOW(), $5)', [dados.descricao, dados.titulo, dados.requisito, 1, dados.idusuario],(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Produto inserido com sucesso", Code: 200 })
               } else {
@@ -41,7 +41,7 @@ class ProductRepository{
       async Edit(project){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('UPDATE PRODUTO SET DESCRICAO = $2, REQUISITO = $3 WHERE IDPRODUTO = $1', [project.idproduto, project.descricao, project.requisito],(err, res) =>{
+            await poolPromise.query('UPDATE PRODUTO SET DESCRICAO = $2, REQUISITO = $3, LOG_DATA = NOW(), LOG_USUARIO = $4 WHERE IDPRODUTO = $1', [project.idproduto, project.descricao, project.requisito, project.idusuario],(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Produto alterado com sucesso", Code: 200 })
               } else {
@@ -54,10 +54,10 @@ class ProductRepository{
           }
         })
       }
-      async Delete(id){
+      async Delete(dados){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('UPDATE PRODUTO SET STATUS = $2 WHERE IDPRODUTO = $1', [id, 0] ,(err, res) =>{
+            await poolPromise.query('UPDATE PRODUTO SET STATUS = $2, LOG_DATA = NOW(), LOG_USUARIO = $3 WHERE IDPRODUTO = $1', [dados.id, 0, dados.idusuario] ,(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Produto excluido com sucesso", Code: 200 })
               } else {

@@ -25,7 +25,7 @@ class ProposalRepository{
       async Insert(dados){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('INSERT INTO PROPOSTA (idprojeto, idaprovador, status) VALUES ($1, $2, $3)', [dados.idprojeto, dados.idaprovador, 1],(err, res) =>{
+            await poolPromise.query('INSERT INTO PROPOSTA (idprojeto, idaprovador, status, log_data, log_usuario) VALUES ($1, $2, $3, NOW(), $4)', [dados.idprojeto, dados.idaprovador, 1, dados.idusuario],(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Proposta inserida com sucesso", Code: 200 })
               } else {
@@ -40,7 +40,7 @@ class ProposalRepository{
       async Edit(dados){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('UPDATE PROPOSTA SET IDPROJETO = $2, IDAPROVADOR = $3 WHERE IDPROPOSTA = $1', [dados.idproposta, dados.idprojeto, dados.idaprovador],(err, res) =>{
+            await poolPromise.query('UPDATE PROPOSTA SET IDPROJETO = $2, IDAPROVADOR = $3, LOG_DATA = NOW(), LOG_USUARIO = $4  WHERE IDPROPOSTA = $1', [dados.idproposta, dados.idprojeto, dados.idaprovador, dados.idusuario],(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Proposta alterada com sucesso", Code: 200 })
               } else {
@@ -52,10 +52,10 @@ class ProposalRepository{
           }
         })
       }
-      async Delete(id){
+      async Delete(dados){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('UPDATE PROPOSTA SET STATUS = $2 WHERE IDPROPOSTA = $1', [id, 0] ,(err, res) =>{
+            await poolPromise.query('UPDATE PROPOSTA SET STATUS = $2, LOG_DATA = NOW(), LOG_USUARIO = $3 WHERE IDPROPOSTA = $1', [dados.id, 0, dados.idusuario] ,(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Proposta excluida com sucesso", Code: 200 })
               } else {

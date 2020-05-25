@@ -26,7 +26,7 @@ class ProjectRepository{
       async Insert(dados){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('INSERT INTO PROJETO (idprojeto, nome, apelido, idcliente, status) VALUES ((SELECT MAX(idprojeto)+1 FROM PROJETO), $1, $2, $3, $4)', [dados.nome, dados.apelido, dados.idcliente, 1],(err, res) =>{
+            await poolPromise.query('INSERT INTO PROJETO (idprojeto, nome, apelido, idcliente, status, log_data, log_usuario) VALUES ((SELECT MAX(idprojeto)+1 FROM PROJETO), $1, $2, $3, $4, NOW(), $5)', [dados.nome, dados.apelido, dados.idcliente, 1, dados.idusuario],(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Projeto inserido com sucesso", Code: 200 })
               } else {
@@ -42,7 +42,7 @@ class ProjectRepository{
       async Edit(project){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('UPDATE PROJETO SET NOME = $2, APELIDO = $3, IDCLIENTE = $4 WHERE IDPROJETO = $1', [project.idprojeto, project.nome, project.apelido, project.idcliente],(err, res) =>{
+            await poolPromise.query('UPDATE PROJETO SET NOME = $2, APELIDO = $3, IDCLIENTE = $4, LOG_DATA = NOW(), LOG_USUARIO = $5 WHERE IDPROJETO = $1', [project.idprojeto, project.nome, project.apelido, project.idcliente, project.idusuario],(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Projeto alterado com sucesso", Code: 200 })
               } else {
@@ -55,10 +55,10 @@ class ProjectRepository{
           }
         })
       }
-      async Delete(id){
+      async Delete(dados){
         return new Promise(async(resolve, reject) => {
           try{
-            await poolPromise.query('UPDATE PROJETO SET STATUS = $2 WHERE IDPROJETO = $1', [id, 0] ,(err, res) =>{
+            await poolPromise.query('UPDATE PROJETO SET STATUS = $2, LOG_DATA = NOW(), LOG_USUARIO = $3 WHERE IDPROJETO = $1', [dados.id, 0, dados.idusuario] ,(err, res) =>{
               if (err == null) {
                 resolve({ Mensagem: "Projeto excluido com sucesso", Code: 200 })
               } else {
