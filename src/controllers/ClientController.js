@@ -28,8 +28,8 @@ class ClientController{
         })
       }
       async Delete(req, res){
-        let id = req.params.id
-        await ClientRepository.Delete(id).then(item => {
+        console.log(req.body)
+        await ClientRepository.Delete(req.body).then(item => {
           res.status(200).json(item)
         }).catch(error => {
             res.status(500).json(error)
