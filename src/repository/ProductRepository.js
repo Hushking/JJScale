@@ -56,16 +56,20 @@ class ProductRepository{
       }
       async Delete(dados){
         return new Promise(async(resolve, reject) => {
-          try{
-            await poolPromise.query('UPDATE PRODUTO SET STATUS = $2, LOG_DATA = NOW(), LOG_USUARIO = $3 WHERE IDPRODUTO = $1', [dados.id, 0, dados.idusuario] ,(err, res) =>{
-              if (err == null) {
-                resolve({ Mensagem: "Produto excluido com sucesso", Code: 200 })
-              } else {
-                reject({ Mensagem: "Não foi possivel excluir o produto", Code: 403 })
-              }
-            })
-          } catch (err) {
-            reject(err.stack)
+          if(dados.id){
+            try{
+              await poolPromise.query('UPDATE PRODUTO SET STATUS = $2, LOG_DATA = NOW(), LOG_USUARIO = $3 WHERE IDPRODUTO = $1', [dados.id, 0, dados.idusuario] ,(err, res) =>{
+                if (err == null) {
+                  resolve({ Mensagem: "Produto excluido com sucesso", Code: 200 })
+                } else {
+                  reject({ Mensagem: "Não foi possivel excluir o produto", Code: 403 })
+                }
+              })
+            } catch (err) {
+              reject(err.stack)
+            }
+          } else {
+            reject({ Mensagem: "Verifique os dados enviados", Code: 500 })
           }
         })
       }
