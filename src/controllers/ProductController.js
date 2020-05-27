@@ -28,8 +28,8 @@ class ProductController{
         })
       }
       async Delete(req, res){
-        let id = req.params.id
-        await ProductRepository.Delete(id).then(item => {
+        console.log(req.body)
+        await ProductRepository.Delete(req.body).then(item => {
           res.status(200).json(item)
         }).catch(error => {
             res.status(500).json(error)

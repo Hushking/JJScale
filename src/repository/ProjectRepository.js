@@ -6,7 +6,7 @@ class ProjectRepository{
         return new Promise(async(resolve, reject) => {
           try {
             let lista = []
-            await poolPromise.query('SELECT P.*, C.RAZAOSOCIAL FROM PROJETO P JOIN CLIENTE C ON C.IDCLIENTE = P.IDCLIENTE WHERE P.STATUS = $1',[1] ,(err, res) => {
+            await poolPromise.query('SELECT P.*, C.RAZAOSOCIAL FROM PROJETO P JOIN CLIENTE C ON C.IDCLIENTE = P.IDCLIENTE WHERE P.STATUS = $1 AND C.STATUS = $1',[1] ,(err, res) => {
               if (err) {
                 reject(err.stack)
               } else {
