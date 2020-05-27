@@ -40,8 +40,7 @@ class UserController {
     })
   }
   async Delete(req, res){
-    let id = req.params.id
-    await UserRepository.Delete(id).then(item => {
+    await UserRepository.Delete(req.body).then(item => {
       res.status(200).json(item)
     }).catch(error => {
         res.status(500).json(error)
