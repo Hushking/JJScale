@@ -6,7 +6,8 @@ const {
   SecurityController,
   ProductController,
   ClientController,
-  TemplateController
+  TemplateController,
+  ProposalController
 } = require('./controllers')
 
 rotas.post('/token', SecurityController.Login)
@@ -43,5 +44,8 @@ rotas.get('/produto/:id', ProductController.GetProductById)
 rotas.post('/produto', ProductController.Insert)
 rotas.put('/produto', ProductController.Edit)
 rotas.delete('/produto', ProductController.Delete)
+
+rotas.get('/propostaUser', ProposalController.GetProposalByUser)
+rotas.get('/propostaCliente', ProposalController.GetProposalByClient)
 
 module.exports = rotas

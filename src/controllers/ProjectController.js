@@ -28,8 +28,7 @@ class ProjectController{
       })
     }
     async Delete(req, res){
-      let id = req.params.id
-      await ProjectRepository.Delete(id).then(item => {
+      await ProjectRepository.Delete(req.body).then(item => {
         res.status(200).json(item)
       }).catch(error => {
           res.status(500).json(error)

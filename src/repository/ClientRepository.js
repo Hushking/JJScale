@@ -58,7 +58,6 @@ class ClientRepository{
       async Delete(dados){
         return new Promise(async(resolve, reject) => {
           if(dados.id){
-            console.log('lololo')
             try{
               await poolPromise.query('UPDATE CLIENTE SET STATUS = $2, LOG_DATA = NOW(), LOG_USUARIO = $3 WHERE IDCLIENTE = $1', [dados.id, 0, dados.idusuario] ,(err, res) =>{
                 if (err == null) {
