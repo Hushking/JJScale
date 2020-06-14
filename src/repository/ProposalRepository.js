@@ -7,7 +7,7 @@ class ProposalRepository{
       return new Promise(async(resolve, reject) => {
         try {
           let lista = []
-          await poolPromise.query('SELECT PR.*, PJ.NOME FROM PROPOSTA PR JOIN PROJETO PJ ON PR.ID_PROJETO = PJ.IDPROJETO WHERE STATUS = $1',[1] ,(err, res) => {
+          await poolPromise.query('SELECT PR.*, PJ.NOME FROM PROPOSTA PR JOIN PROJETO PJ ON PR.IDPROJETO = PJ.IDPROJETO WHERE STATUS = $1',[1] ,(err, res) => {
             if (err) {
               reject(err.stack)
             } else {
@@ -72,7 +72,7 @@ class ProposalRepository{
       return new Promise(async(resolve, reject) => {
         try {
           let list = []
-          await poolPromise.query('SELECT PR.*, PJ.NOME FROM PROPOSTA PR JOIN PROJETO PJ ON PR.ID_PROJETO = PJ.IDPROJETO WHERE IDPROPOSTA = $1 AND STATUS = $2', [id, 1], (err, res) => {
+          await poolPromise.query('SELECT PR.*, PJ.NOME FROM PROPOSTA PR JOIN PROJETO PJ ON PR.IDPROJETO = PJ.IDPROJETO WHERE IDPROPOSTA = $1 AND STATUS = $2', [id, 1], (err, res) => {
             if (err) {
               reject(err.stack)
             } else {
