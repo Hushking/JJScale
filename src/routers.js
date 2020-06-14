@@ -34,7 +34,7 @@ rotas.put('/cliente', ClientController.Edit)
 rotas.delete('/cliente', ClientController.Delete)
 
 rotas.get('/modelo', TemplateController.GetTemplate)
-rotas.get('/modelo', TemplateController.GetTemplateById)
+rotas.get('/modelo/:id', TemplateController.GetTemplateById)
 rotas.post('/modelo', TemplateController.Insert)
 rotas.put('/modelo', TemplateController.Edit)
 rotas.delete('/modelo', TemplateController.Delete)
@@ -45,6 +45,12 @@ rotas.post('/produto', ProductController.Insert)
 rotas.put('/produto', ProductController.Edit)
 rotas.delete('/produto', ProductController.Delete)
 
+
+rotas.get('/proposta', ProposalController.GetProposal)
+rotas.get('/proposta/:id', ProposalController.GetProposalById)
+rotas.post('/proposta', ProposalController.Insert)
+rotas.put('/proposta', ProposalController.Edit)
+rotas.delete('/proposta', ProposalController.Delete)
 rotas.get('/propostaUser', ProposalController.GetProposalByUser)
 rotas.get('/propostaCliente', ProposalController.GetProposalByClient)
 
