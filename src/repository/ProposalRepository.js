@@ -45,7 +45,7 @@ class ProposalRepository{
     async Edit(dados){
       return new Promise(async(resolve, reject) => {
         try{
-          await poolPromise.query('UPDATE PROPOSTA SET IDPROJETO = $2, LOG_DATA_ALTERACAO = NOW(), LOG_USUARIO = $3, OBSERVACAO = 4$ WHERE IDPROPOSTA = $1', [dados.idproposta, dados.idprojeto, dados.idusuario, dados.observacao],(err, res) =>{
+          await poolPromise.query('UPDATE PROPOSTA SET IDPROJETO = $2, LOG_DATA_ALTERACAO = NOW(), LOG_USUARIO = $3, OBSERVACAO = $4 WHERE IDPROPOSTA = $1', [dados.idproposta, dados.idprojeto, dados.idusuario, dados.observacao],(err, res) =>{
             if (err == null) {
               resolve({ Mensagem: "Proposta alterada com sucesso", Code: 200 })
             } else {
