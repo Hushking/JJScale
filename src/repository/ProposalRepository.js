@@ -29,10 +29,11 @@ class ProposalRepository{
     async Insert(dados){
       return new Promise(async(resolve, reject) => {
         try{
-          await poolPromise.query('INSERT INTO PROPOSTA (idproposta, idprojeto, status, log_data, log_usuario, observacao) VALUES ((SELECT MAX(idprojeto)+1 FROM PROJETO), $1, $2, NOW(), $3 ,$4)', [dados.idprojeto, 1, dados.idusuario, dados.observacao],(err, res) =>{
+          await poolPromise.query('INSERT INTO PROPOSTA (idproposta, idprojeto, status, log_data, log_usuario, observacao) VALUES ((SELECT MAX(idproposta)+1 FROM PROPOSTA), $1, $2, NOW(), $3 ,$4)', [dados.idprojeto, 1, dados.idusuario, dados.observacao],(err, res) =>{
             if (err == null) {
               resolve({ Mensagem: "Proposta inserida com sucesso", Code: 200 })
             } else {
+              console.log(err)
               reject({ Mensagem: "Não foi possivel inserir os dados da proposta", Code: 403 })
             }
           })
