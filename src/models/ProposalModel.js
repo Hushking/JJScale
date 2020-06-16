@@ -7,6 +7,7 @@ class ProposalModel{
         , nome
         , log_data
         , log_data_alteracao
+        , usuario
     }){
         this.idproposta = idproposta
         this.idprojeto = idprojeto
@@ -15,6 +16,7 @@ class ProposalModel{
         this.nome = nome
         this.log_data = log_data
         this.log_data_alteracao = log_data_alteracao
+        this.usuario = usuario
     }
 }
 module.exports = ProposalModel
