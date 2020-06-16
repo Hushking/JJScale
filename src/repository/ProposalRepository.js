@@ -1,6 +1,7 @@
 const { poolPromise } = require('../middleware/dbconfig')
 const ProposalModel = require('../models/ProposalModel')
 const CountModel = require('../models/CountModel')
+const moment = require('moment')
 
 class ProposalRepository{
     async GetProposal() {
@@ -13,6 +14,8 @@ class ProposalRepository{
             } else {
               res.rows.map(item => {
                 let proposal = new ProposalModel({...item})
+                proposal.log_data = moment(proposal.log_data).format('YYYY-MM-DD')
+                proposal.log_data_alteracao == null ? null : moment(proposal.log_data_alteracao).format('YYYY-MM-DD')
                 lista.push(proposal)
               })
               resolve(lista)
@@ -41,7 +44,7 @@ class ProposalRepository{
     async Edit(dados){
       return new Promise(async(resolve, reject) => {
         try{
-          await poolPromise.query('UPDATE PROPOSTA SET IDPROJETO = $2, IDAPROVADOR = $3, LOG_DATA = NOW(), LOG_USUARIO = $4, OBSERVACAO = 5$ WHERE IDPROPOSTA = $1', [dados.idproposta, dados.idprojeto, dados.idaprovador, dados.idusuario, dados.observacao],(err, res) =>{
+          await poolPromise.query('UPDATE PROPOSTA SET IDPROJETO = $2, IDAPROVADOR = $3, LOG_DATA_ALTERACAO = NOW(), LOG_USUARIO = $4, OBSERVACAO = 5$ WHERE IDPROPOSTA = $1', [dados.idproposta, dados.idprojeto, dados.idaprovador, dados.idusuario, dados.observacao],(err, res) =>{
             if (err == null) {
               resolve({ Mensagem: "Proposta alterada com sucesso", Code: 200 })
             } else {
@@ -79,6 +82,8 @@ class ProposalRepository{
               if (res.rowCount == 1){
                 res.rows.map(item => {
                   let proposal = new ProposalModel({...item})
+                  proposal.log_data = moment(proposal.log_data).format('YYYY-MM-DD')
+                  proposal.log_data_alteracao == null ? null : moment(proposal.log_data_alteracao).format('YYYY-MM-DD')
                   list.push(proposal)
                 })
                 resolve(list)
