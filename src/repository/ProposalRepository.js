@@ -29,7 +29,7 @@ class ProposalRepository{
     async Insert(dados){
       return new Promise(async(resolve, reject) => {
         try{
-          await poolPromise.query('INSERT INTO PROPOSTA (idprojeto, idaprovador, status, log_data, log_usuario, observacao) VALUES ($1, $2, $3, NOW(), $4, 5$)', [dados.idprojeto, dados.idaprovador, 1, dados.idusuario, dados.observacao],(err, res) =>{
+          await poolPromise.query('INSERT INTO PROPOSTA (idproposta, idprojeto, status, log_data, log_usuario, observacao) VALUES ((SELECT MAX(idprojeto)+1 FROM PROJETO), $1, $2, NOW(), $3 ,$4)', [dados.idprojeto, 1, dados.idusuario, dados.observacao],(err, res) =>{
             if (err == null) {
               resolve({ Mensagem: "Proposta inserida com sucesso", Code: 200 })
             } else {
@@ -44,7 +44,7 @@ class ProposalRepository{
     async Edit(dados){
       return new Promise(async(resolve, reject) => {
         try{
-          await poolPromise.query('UPDATE PROPOSTA SET IDPROJETO = $2, IDAPROVADOR = $3, LOG_DATA_ALTERACAO = NOW(), LOG_USUARIO = $4, OBSERVACAO = 5$ WHERE IDPROPOSTA = $1', [dados.idproposta, dados.idprojeto, dados.idaprovador, dados.idusuario, dados.observacao],(err, res) =>{
+          await poolPromise.query('UPDATE PROPOSTA SET IDPROJETO = $2, LOG_DATA_ALTERACAO = NOW(), LOG_USUARIO = $3, OBSERVACAO = 4$ WHERE IDPROPOSTA = $1', [dados.idproposta, dados.idprojeto, dados.idusuario, dados.observacao],(err, res) =>{
             if (err == null) {
               resolve({ Mensagem: "Proposta alterada com sucesso", Code: 200 })
             } else {
