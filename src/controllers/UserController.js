@@ -14,33 +14,21 @@ class UserController {
     })
   }
   async Insert(req, res){
-    let user = new UserModel(
-      null
-      , req.body.name
-      , req.body.cpf 
-      , req.body.email
-    )
-    await UserRepository.Insert(user).then(item => {
+    await UserRepository.Insert(req.body).then(item => {
       res.status(200).json(item)
     }).catch(error => {
         res.status(500).json(error)
     })
   }
   async Edit(req, res){
-    let user = new UserModel(
-      req.body.id
-      , req.body.name
-      , req.body.cpf 
-      , req.body.email
-    )
-    await UserRepository.Edit(user).then(item => {
+    await UserRepository.Edit(req.body).then(item => {
       res.status(200).json(item)
     }).catch(error => {
         res.status(500).json(error)
     })
   }
   async Delete(req, res){
-    await UserRepository.Delete(req.body).then(item => {
+    await UserRepository.Delete(req.body.data).then(item => {
       res.status(200).json(item)
     }).catch(error => {
         res.status(500).json(error)
