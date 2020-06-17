@@ -19,7 +19,7 @@ rotas.get('/user/:id', UserController.GetUserById)
 rotas.get('/user/check/:cpf', UserController.VerifyUser)
 rotas.post('/user', UserController.Insert)
 rotas.put('/user', UserController.Edit)
-rotas.delete('/user/:id', UserController.Delete)
+rotas.delete('/user', UserController.Delete)
 
 rotas.get('/projeto', ProjectController.GetProjects)
 rotas.get('/projeto/:id', ProjectController.GetProjectById)
