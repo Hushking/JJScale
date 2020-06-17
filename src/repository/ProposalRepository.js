@@ -8,7 +8,7 @@ class ProposalRepository{
       return new Promise(async(resolve, reject) => {
         try {
           let lista = []
-          await poolPromise.query('SELECT PR.*, PJ.NOME, U.NAME AS usuario FROM PROPOSTA PR JOIN PROJETO PJ ON PR.IDPROJETO = PJ.IDPROJETO JOIN USERS U ON PR.LOG_USUARIO = U.ID WHERE PR.STATUS = $1',[1] ,(err, res) => {
+          await poolPromise.query('SELECT PR.LOG_USUARIO AS id_usuario_criador, PR.OBSERVACAO, PR.IDPROPOSTA, PR.IDPROJETO, PJ.NOME, PR.LOG_DATA, PR.LOG_DATA_ALTERACAO, USERS.NAME AS usuario, (SELECT NAME FROM USERS WHERE PR.LOG_USUARIO_EDITOR = ID) AS usuario_editor FROM PROPOSTA PR JOIN USERS ON PR.LOG_USUARIO = USERS.ID LEFT JOIN PROJETO PJ ON PR.IDPROJETO = PJ.IDPROJETO WHERE PR.STATUS = $1',[1] ,(err, res) => {
             if (err) {
               reject(err.stack)
             } else {
@@ -76,7 +76,7 @@ class ProposalRepository{
       return new Promise(async(resolve, reject) => {
         try {
           let list = []
-          await poolPromise.query('SELECT PR.*, PJ.NOME, U.NAME AS usuario FROM PROPOSTA PR JOIN PROJETO PJ ON PR.IDPROJETO = PJ.IDPROJETO JOIN USERS U ON PR.LOG_USUARIO = U.ID WHERE PR.IDPROPOSTA = $1 AND PR.STATUS = $2', [id, 1], (err, res) => {
+          await poolPromise.query('SELECT PR.LOG_USUARIO AS id_usuario_criador, PR.OBSERVACAO, PR.IDPROPOSTA, PR.IDPROJETO, PJ.NOME, PR.LOG_DATA, PR.LOG_DATA_ALTERACAO, USERS.NAME AS usuario, (SELECT NAME FROM USERS WHERE PR.LOG_USUARIO_EDITOR = ID) AS usuario_editor FROM PROPOSTA PR JOIN USERS ON PR.LOG_USUARIO = USERS.ID LEFT JOIN PROJETO PJ ON PR.IDPROJETO = PJ.IDPROJETO WHERE PR.IDPROPOSTA = $1 AND PR.STATUS = $2', [id, 1], (err, res) => {
             if (err) {
               reject(err.stack)
             } else {
