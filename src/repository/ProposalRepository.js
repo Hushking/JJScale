@@ -1,6 +1,7 @@
 const { poolPromise } = require('../middleware/dbconfig')
 const ProposalModel = require('../models/ProposalModel')
 const CountModel = require('../models/CountModel')
+const CountMonthModel = require('../models/CountMonthModel')
 const moment = require('moment')
 
 class ProposalRepository{
@@ -129,6 +130,28 @@ class ProposalRepository{
             } else {
               res.rows.map(item => {
                 let count = new CountModel({...item})
+                count.color = "#"+((1<<24)*Math.random()|0).toString(16)
+                lista.push(count)
+              })
+              resolve(lista)
+            }
+          })
+        } catch (err) {
+          reject(err.stack)
+        }
+      })
+    }
+    async GetProposalByMonth(){
+      return new Promise(async(resolve, reject) => {
+        try {
+          let lista = []
+          await poolPromise.query("select count(*) qtd_proposta, TO_CHAR(log_data, 'Month') as mes_criacao_proposta from proposta group by mes_criacao_proposta",(err, res) => {
+            if (err) {
+              reject(err.stack)
+            } else {
+              res.rows.map(item => {
+                let count = new CountMonthModel({...item})
+                count.mes_criacao_proposta = count.mes_criacao_proposta.trim()
                 count.color = "#"+((1<<24)*Math.random()|0).toString(16)
                 lista.push(count)
               })

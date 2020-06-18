@@ -53,5 +53,6 @@ rotas.put('/proposta', ProposalController.Edit)
 rotas.delete('/proposta', ProposalController.Delete)
 rotas.get('/propostaUser', ProposalController.GetProposalByUser)
 rotas.get('/propostaCliente', ProposalController.GetProposalByClient)
+rotas.get('/propostaMes', ProposalController.GetProposalByMonth)
 
 module.exports = rotas

@@ -60,5 +60,12 @@ class ProposalController{
             res.status(500).json(error)
         })
     }
+    async GetProposalByMonth(req, res){
+      await ProposalRepository.GetProposalByMonth().then(item => {
+          res.status(200).json(item)
+      }).catch(error => {
+          res.status(500).json(error)
+      })
+  }
 }
 module.exports = new ProposalController()
