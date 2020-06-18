@@ -99,7 +99,7 @@ class UserRepository {
     return new Promise(async(resolve, reject) => {
       try{
         let user;
-        await poolPromise.query('SELECT * FROM USERS WHERE CPF = $1', [cpf], (err, res) => {
+        await poolPromise.query('SELECT * FROM USERS WHERE CPF = $1 AND STATUS = $2', [cpf, 1], (err, res) => {
           if (err) {
             reject(err.stack)
           } else {
