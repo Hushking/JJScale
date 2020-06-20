@@ -145,7 +145,7 @@ class ProposalRepository{
       return new Promise(async(resolve, reject) => {
         try {
           let lista = []
-          await poolPromise.query("select count(*) qtd_proposta, TO_CHAR(log_data, 'Month') as mes_criacao_proposta from proposta where status = $1 group by mes_criacao_proposta",[1],(err, res) => {
+          await poolPromise.query("select count(idproposta) as qtd_proposta, TO_CHAR(proposta.log_data, 'Month') as mes_criacao_proposta  from proposta  join users on users.id = proposta.log_usuario where proposta.status = $1 and users.status = $1 group by mes_criacao_proposta",[1],(err, res) => {
             if (err) {
               reject(err.stack)
             } else {
