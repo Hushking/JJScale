@@ -103,7 +103,7 @@ class ProposalRepository{
       return new Promise(async(resolve, reject) => {
         try {
           let lista = []
-          await poolPromise.query('SELECT COUNT(*), USERS.NAME AS NOME FROM PROPOSTA JOIN USERS ON PROPOSTA.LOG_USUARIO = USERS.ID GROUP BY USERS.ID',(err, res) => {
+          await poolPromise.query('SELECT COUNT(*), USERS.NAME AS NOME FROM PROPOSTA JOIN USERS ON PROPOSTA.LOG_USUARIO = USERS.ID WHERE USERS.STATUS = $1 AND PROPOSTA.STATUS = $1 GROUP BY USERS.ID',[1],(err, res) => {
             if (err) {
               reject(err.stack)
             } else {
@@ -124,7 +124,7 @@ class ProposalRepository{
       return new Promise(async(resolve, reject) => {
         try {
           let lista = []
-          await poolPromise.query('SELECT COUNT(*), PROJETO.NOME FROM PROPOSTA JOIN PROJETO ON PROPOSTA.IDPROJETO = PROJETO.IDPROJETO GROUP BY PROJETO.IDPROJETO',(err, res) => {
+          await poolPromise.query('SELECT COUNT(*), PROJETO.NOME FROM PROPOSTA JOIN PROJETO ON PROPOSTA.IDPROJETO = PROJETO.IDPROJETO WHERE PROJETO.STATUS = $1 AND PROPOSTA.STATUS = $1 GROUP BY PROJETO.IDPROJETO',[1],(err, res) => {
             if (err) {
               reject(err.stack)
             } else {
@@ -145,7 +145,7 @@ class ProposalRepository{
       return new Promise(async(resolve, reject) => {
         try {
           let lista = []
-          await poolPromise.query("select count(*) qtd_proposta, TO_CHAR(log_data, 'Month') as mes_criacao_proposta from proposta group by mes_criacao_proposta",(err, res) => {
+          await poolPromise.query("select count(*) qtd_proposta, TO_CHAR(log_data, 'Month') as mes_criacao_proposta from proposta where status = $1 group by mes_criacao_proposta",[1],(err, res) => {
             if (err) {
               reject(err.stack)
             } else {
